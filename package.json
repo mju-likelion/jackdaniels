@@ -15,9 +15,12 @@
     "@types/react-dom": "18.0.10",
     "next": "13.1.6",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "react-hook-form": "^7.43.1",
+    "validator": "^13.9.0"
   },
   "devDependencies": {
+    "@types/validator": "^13.7.12",
     "@typescript-eslint/eslint-plugin": "^5.50.0",
     "@typescript-eslint/parser": "^5.50.0",
     "autoprefixer": "^10.4.13",
