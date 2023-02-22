@@ -14,14 +14,14 @@ export const SignInForm: FC = () => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col w-72 xs:w-full xs:m-8"
+      className="xs:w-full xs:m-8 flex w-72 flex-col"
     >
       <input
         type="email"
         autoComplete="email"
         required
         placeholder="이메일"
-        className="bg-gray1 rounded-none rounded-t-md p-2.5 pl-3.5 outline-0 box-border border-gray3 border-b"
+        className="box-border rounded-none rounded-t-md border-b border-gray3 bg-gray1 p-2.5 pl-3.5 outline-0"
         {...register('email', {
           required: true,
           validate: email => isEmail(email),
@@ -32,12 +32,12 @@ export const SignInForm: FC = () => {
         autoComplete="current-password"
         required
         placeholder="비밀번호"
-        className="bg-gray1 rounded-none rounded-b-md p-2.5 pl-3.5 outline-0 box-border"
+        className="box-border rounded-none rounded-b-md bg-gray1 p-2.5 pl-3.5 outline-0"
         {...register('password', { required: true })}
       />
       <button
         type="submit"
-        className="bg-gray1 rounded-md p-2.5 mt-3.5 outline-0 box-border"
+        className="mt-3.5 box-border rounded-md bg-gray1 p-2.5 outline-0"
       >
         로그인
       </button>
