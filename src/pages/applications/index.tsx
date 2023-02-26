@@ -7,11 +7,11 @@ import {
   FirstApplicationData,
   IApplicationData,
   IData,
-  SecondApplicationData,
 } from '../../components/applications/applicationData';
 
-const MENU = ['name', 'major', 'grade', 'part'];
+const MENU = ['name', 'major', 'grade', 'part', 'createdDate'];
 //페이지 화면에서 먼저 볼 회원 정보
+const PARTS: Parts[] = [Parts.all, Parts.web, Parts.server, Parts.design];
 
 const index = () => {
   const [part, setPart] = useState<Parts>(Parts.all);
@@ -23,6 +23,7 @@ const index = () => {
   useEffect(() => {
     //지원서 받아오는 요청
     console.log(`selected Part:${part} current page:${page}`);
+
     setApplications(FirstApplicationData);
   }, [part, page]);
   //sorting 방법, part, page가 바뀔 때마다 요청
@@ -63,7 +64,7 @@ const index = () => {
 
   return (
     <div className="m-auto h-screen w-2/3 p-4">
-      <ListBox part={part} setPart={setPart} />
+      part: <ListBox stateData={PARTS} state={part} setState={setPart} />
       <div className="flex h-14 w-full items-center p-3 text-xl">
         {MENU.map((menu, i) => (
           <div key={i} className="flex-1 text-white">
