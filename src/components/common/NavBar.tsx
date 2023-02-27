@@ -1,4 +1,4 @@
-import { Fragment } from 'react';
+import { FC, Fragment, PropsWithChildren } from 'react';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { classNames } from '@/utils';
@@ -17,7 +17,7 @@ const userNavigation = [
   { name: 'Sign out', href: '#' },
 ];
 
-export const NavBar = () => {
+export const NavBar: FC<PropsWithChildren> = ({ children }) => {
   return (
     <>
       {/*
@@ -180,6 +180,9 @@ export const NavBar = () => {
             </>
           )}
         </Disclosure>
+        <main className="mx-auto max-w-7xl py-8 px-4 sm:px-6 lg:px-8">
+          {children}
+        </main>
       </div>
     </>
   );
