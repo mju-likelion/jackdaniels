@@ -1,5 +1,5 @@
 import { Html, Head, Main, NextScript } from 'next/document';
-import { NavBar } from '@/components/common/NavBar';
+import { NavBar } from '@/components/common';
 
 export default function Document() {
   return (

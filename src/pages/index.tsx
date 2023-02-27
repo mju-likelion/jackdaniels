@@ -1,3 +1,5 @@
+import { PageTitle } from '@/components/common';
+
 export default function Home() {
-  return <>Hello</>;
+  return <PageTitle>Hello</PageTitle>;
 }
