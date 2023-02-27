@@ -24,12 +24,12 @@ export const NavBar = () => {
         This example requires updating your template:
 
         ```
-        <html class="h-full bg-gray-100">
+        <html class="h-full bg-zinc-100">
         <body class="h-full">
         ```
       */}
       <div className="min-h-full">
-        <Disclosure as="nav" className="bg-gray-800">
+        <Disclosure as="nav" className="bg-zinc-800">
           {({ open }) => (
             <>
               <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -50,8 +50,8 @@ export const NavBar = () => {
                             href={item.href}
                             className={classNames(
                               item.current
-                                ? 'bg-gray-900 text-white'
-                                : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                                ? 'bg-zinc-900 text-white'
+                                : 'text-zinc-300 hover:bg-zinc-700 hover:text-white',
                               'px-3 py-2 rounded-md text-sm font-medium',
                             )}
                             aria-current={item.current ? 'page' : undefined}
@@ -67,7 +67,7 @@ export const NavBar = () => {
                       {/* Profile dropdown */}
                       <Menu as="div" className="relative ml-3">
                         <div>
-                          <Menu.Button className="flex max-w-xs items-center rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                          <Menu.Button className="flex max-w-xs items-center rounded-full bg-zinc-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-zinc-800">
                             <span className="sr-only">Open user menu</span>
                             <img
                               className="h-8 w-8 rounded-full"
@@ -85,15 +85,15 @@ export const NavBar = () => {
                           leaveFrom="transform opacity-100 scale-100"
                           leaveTo="transform opacity-0 scale-95"
                         >
-                          <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                          <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black/5 focus:outline-none">
                             {userNavigation.map(item => (
                               <Menu.Item key={item.name}>
                                 {({ active }) => (
                                   <a
                                     href={item.href}
                                     className={classNames(
-                                      active ? 'bg-gray-100' : '',
-                                      'block px-4 py-2 text-sm text-gray-700',
+                                      active ? 'bg-zinc-100' : '',
+                                      'block px-4 py-2 text-sm text-zinc-700',
                                     )}
                                   >
                                     {item.name}
@@ -108,7 +108,7 @@ export const NavBar = () => {
                   </div>
                   <div className="-mr-2 flex md:hidden">
                     {/* Mobile menu button */}
-                    <Disclosure.Button className="inline-flex items-center justify-center rounded-md bg-gray-800 p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                    <Disclosure.Button className="inline-flex items-center justify-center rounded-md bg-zinc-800 p-2 text-zinc-400 hover:bg-zinc-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-zinc-800">
                       <span className="sr-only">Open main menu</span>
                       {open ? (
                         <XMarkIcon
@@ -135,8 +135,8 @@ export const NavBar = () => {
                       href={item.href}
                       className={classNames(
                         item.current
-                          ? 'bg-gray-900 text-white'
-                          : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                          ? 'bg-zinc-900 text-white'
+                          : 'text-zinc-300 hover:bg-zinc-700 hover:text-white',
                         'block px-3 py-2 rounded-md text-base font-medium',
                       )}
                       aria-current={item.current ? 'page' : undefined}
@@ -145,7 +145,7 @@ export const NavBar = () => {
                     </Disclosure.Button>
                   ))}
                 </div>
-                <div className="border-t border-gray-700 pt-4 pb-3">
+                <div className="border-t border-zinc-700 pt-4 pb-3">
                   <div className="flex items-center px-5">
                     <div className="shrink-0">
                       <img
@@ -158,7 +158,7 @@ export const NavBar = () => {
                       <div className="text-base font-medium leading-none text-white">
                         {user.name}
                       </div>
-                      <div className="text-sm font-medium leading-none text-gray-400">
+                      <div className="text-sm font-medium leading-none text-zinc-400">
                         {user.email}
                       </div>
                     </div>
@@ -169,7 +169,7 @@ export const NavBar = () => {
                         key={item.name}
                         as="a"
                         href={item.href}
-                        className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
+                        className="block rounded-md px-3 py-2 text-base font-medium text-zinc-400 hover:bg-zinc-700 hover:text-white"
                       >
                         {item.name}
                       </Disclosure.Button>
