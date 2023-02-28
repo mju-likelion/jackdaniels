@@ -5,6 +5,13 @@ export enum Parts {
   design = 'DESIGN',
 }
 
+export enum SortOrders {
+  createdDate_asc = '지원일자 오름차순',
+  createdDate_desc = '지원일자 내림차순',
+  name_asc = '이름 오름차순',
+  name_desc = '이름 내림차순',
+}
+
 export interface Application {
   name: string;
   phone: string;

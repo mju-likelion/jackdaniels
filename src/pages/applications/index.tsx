@@ -1,32 +1,49 @@
 import ApplicationOverview from '@/components/applications/ApplicationOverview';
 import ListBox from '@/components/applications/ListBox';
-import { PAGE_ACTION, Parts } from '@/types/ApplicationsType';
+import { PAGE_ACTION, Parts, SortOrders } from '@/types/ApplicationsType';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
-import {
-  FirstApplicationData,
-  IApplicationData,
-  IData,
-} from '../../components/applications/applicationData';
+import { useState } from 'react';
+import { IData } from '../../components/applications/applicationData';
+import useSWR from 'swr';
+import qs from 'qs';
 
 const MENU = ['name', 'major', 'grade', 'part', 'createdDate'];
 //페이지 화면에서 먼저 볼 회원 정보
 const PARTS: Parts[] = [Parts.all, Parts.web, Parts.server, Parts.design];
+const SORTOPTIONS: SortOrders[] = [
+  SortOrders.createdDate_asc,
+  SortOrders.createdDate_desc,
+  SortOrders.name_asc,
+  SortOrders.name_desc,
+];
 
 const index = () => {
   const [part, setPart] = useState<Parts>(Parts.all);
-  const [applications, setApplications] = useState<IApplicationData>();
+  const [sortOptions, setSortOptions] = useState<SortOrders>(
+    SortOrders.createdDate_asc,
+  );
   const [page, setPage] = useState(1);
 
   const router = useRouter();
 
-  useEffect(() => {
-    //지원서 받아오는 요청
-    console.log(`selected Part:${part} current page:${page}`);
+  const enumValueToKey = (
+    value: string,
+    targetEnum: Record<string, number | string>,
+  ) => {
+    const keys = Object.keys(targetEnum);
+    const result = keys.filter(key => targetEnum[key] === value)[0];
+    return result;
+  };
 
-    setApplications(FirstApplicationData);
-  }, [part, page]);
-  //sorting 방법, part, page가 바뀔 때마다 요청
+  const query = qs.stringify({
+    page,
+    sort: enumValueToKey(sortOptions, SortOrders),
+    ...(enumValueToKey(part, Parts) !== 'all' && {
+      part: enumValueToKey(part, Parts),
+    }),
+  });
+
+  const { data, isLoading } = useSWR(`/api/applications?${query}`);
 
   const showDetail = (application: IData) => {
     router.push(
@@ -40,7 +57,7 @@ const index = () => {
   };
 
   const handlePage = (page_Action: PAGE_ACTION) => {
-    const totalPage = applications?.meta.totalPage;
+    const totalPage = data?.meta.totalPage;
     if (!totalPage) return;
 
     switch (page_Action) {
@@ -64,35 +81,58 @@ const index = () => {
 
   return (
     <div className="m-auto h-screen w-2/3 p-4">
-      part: <ListBox stateData={PARTS} state={part} setState={setPart} />
-      <div className="flex h-14 w-full items-center p-3 text-xl">
-        {MENU.map((menu, i) => (
-          <div key={i} className="flex-1 text-white">
-            {menu}
+      {isLoading ? (
+        <div>Loading...</div>
+      ) : (
+        <>
+          <div className="flex">
+            <div>
+              <ListBox
+                label="part"
+                stateData={PARTS}
+                state={part}
+                setState={setPart}
+              />
+            </div>
+            <div>
+              <ListBox
+                label="sort"
+                stateData={SORTOPTIONS}
+                state={sortOptions}
+                setState={setSortOptions}
+              />
+            </div>
           </div>
-        ))}
-      </div>
-      {/* 어떤 정보를 페이지네이션 화면에서 볼 지     */}
-      <div className="  mb-3 rounded-b-xl">
-        {FirstApplicationData.data.map(application => (
-          <ApplicationOverview
-            key={application.id}
-            info={application}
-            menu={MENU}
-            onClick={() => showDetail(application)}
-          />
-        ))}
-        <div className="my-1 text-center">
-          {/* 먼저 볼 회원 정보 렌더링 */}
-          <button onClick={() => handlePage(PAGE_ACTION.decrement)}>
-            {'< '}
-          </button>
-          {page}/{applications?.meta.totalPage}
-          <button onClick={() => handlePage(PAGE_ACTION.increment)}>
-            {' >'}
-          </button>
-        </div>
-      </div>
+          <div className="flex h-14 w-full items-center p-3 text-xl">
+            {MENU.map((menu, i) => (
+              <div key={i} className="flex-1 text-white">
+                {menu}
+              </div>
+            ))}
+          </div>
+          {/* 어떤 정보를 페이지네이션 화면에서 볼 지     */}
+          <div className="  mb-3 rounded-b-xl">
+            {data.data.map((application: IData) => (
+              <ApplicationOverview
+                key={application.id}
+                info={application}
+                menu={MENU}
+                onClick={() => showDetail(application)}
+              />
+            ))}
+            <div className="my-1 text-center">
+              {/* 먼저 볼 회원 정보 렌더링 */}
+              <button onClick={() => handlePage(PAGE_ACTION.decrement)}>
+                {'< '}
+              </button>
+              {page}/{data?.meta.totalPage}
+              <button onClick={() => handlePage(PAGE_ACTION.increment)}>
+                {' >'}
+              </button>
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 };
