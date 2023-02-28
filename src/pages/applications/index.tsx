@@ -3,11 +3,12 @@ import ListBox from '@/components/applications/ListBox';
 import { PAGE_ACTION, Parts, SortOrders } from '@/types/ApplicationsType';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import { IData } from '../../components/applications/applicationData';
+import { IData } from '@/components/applications/ApplicationData';
 import useSWR from 'swr';
 import qs from 'qs';
+import ApplicationMenu from '@/components/applications/ApplicationMenu';
+import Pagination from '@/components/applications/Pagination';
 
-const MENU = ['name', 'major', 'grade', 'part', 'createdDate'];
 //페이지 화면에서 먼저 볼 회원 정보
 const PARTS: Parts[] = [Parts.all, Parts.web, Parts.server, Parts.design];
 const SORTOPTIONS: SortOrders[] = [
@@ -56,23 +57,17 @@ const index = () => {
     //state 같은 방법이 있는지..?
   };
 
-  const handlePage = (page_Action: PAGE_ACTION) => {
+  const handlePageChange = (pageAction: PAGE_ACTION) => {
     const totalPage = data?.meta.totalPage;
     if (!totalPage) return;
 
-    switch (page_Action) {
+    switch (pageAction) {
       case PAGE_ACTION.increment:
-        if (page >= totalPage) return;
-        else {
-          setPage(page + 1);
-          break;
-        }
+        setPage(page + 1);
+        break;
       case PAGE_ACTION.decrement:
-        if (page === 1) return;
-        else {
-          setPage(page - 1);
-          break;
-        }
+        setPage(page - 1);
+        break;
       default:
         return;
     }
@@ -80,7 +75,7 @@ const index = () => {
   //useReducer 사용해야 할지..?
 
   return (
-    <div className="m-auto h-screen w-2/3 p-4">
+    <div className="m-auto h-screen w-full p-4">
       {isLoading ? (
         <div>Loading...</div>
       ) : (
@@ -103,34 +98,21 @@ const index = () => {
               />
             </div>
           </div>
-          <div className="flex h-14 w-full items-center p-3 text-xl">
-            {MENU.map((menu, i) => (
-              <div key={i} className="flex-1 text-white">
-                {menu}
-              </div>
-            ))}
-          </div>
+          <ApplicationMenu />
+
           {/* 어떤 정보를 페이지네이션 화면에서 볼 지     */}
-          <div className="  mb-3 rounded-b-xl">
-            {data.data.map((application: IData) => (
-              <ApplicationOverview
-                key={application.id}
-                info={application}
-                menu={MENU}
-                onClick={() => showDetail(application)}
-              />
-            ))}
-            <div className="my-1 text-center">
-              {/* 먼저 볼 회원 정보 렌더링 */}
-              <button onClick={() => handlePage(PAGE_ACTION.decrement)}>
-                {'< '}
-              </button>
-              {page}/{data?.meta.totalPage}
-              <button onClick={() => handlePage(PAGE_ACTION.increment)}>
-                {' >'}
-              </button>
-            </div>
-          </div>
+          {data.data.map((application: IData) => (
+            <ApplicationOverview
+              key={application.id}
+              info={application}
+              onClick={() => showDetail(application)}
+            />
+          ))}
+          <Pagination
+            page={page}
+            handlePageChange={handlePageChange}
+            totalPage={data.meta.totalPage}
+          />
         </>
       )}
     </div>
