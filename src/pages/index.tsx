@@ -1,3 +1,5 @@
+import { PageTitle } from '@/components/common';
+
 export default function Home() {
-  return <h1 className="text-3xl font-bold underline">Hello world!</h1>;
+  return <PageTitle>Hello</PageTitle>;
 }
