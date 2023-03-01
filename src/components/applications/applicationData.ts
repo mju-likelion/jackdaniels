@@ -7,7 +7,7 @@ export interface IMeta {
 }
 
 export interface IObj {
-  [key: string]: string;
+  [key: string]: any;
 }
 
 export interface IData extends IObj {
