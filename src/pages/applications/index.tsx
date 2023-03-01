@@ -80,8 +80,8 @@ const index = () => {
         <div>Loading...</div>
       ) : (
         <>
-          <div className="flex">
-            <div>
+          <div className="flex justify-end">
+            <div className="mr-3">
               <ListBox
                 label="part"
                 stateData={PARTS}

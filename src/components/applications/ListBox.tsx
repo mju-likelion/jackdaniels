@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 
-import { Listbox } from '@headlessui/react';
+import { Listbox, Transition } from '@headlessui/react';
 
 interface Props<T> {
   label: string;
@@ -27,17 +27,36 @@ const ListBox = <T extends string>({
   state,
   setState,
 }: Props<T>) => (
-  <div className="flex">
-    <div>{`${label}: `}</div>
+  <div className="flex items-center justify-center">
+    <div className="whitespace-pre-wrap text-xl	">{`${label}: `}</div>
     <Listbox value={state} onChange={setState}>
-      <Listbox.Button className="relative h-7 w-36 bg-gray3">{`${state}`}</Listbox.Button>
-      <Listbox.Options className="absolute w-36 bg-black">
-        {stateData.map((data, i) => (
-          <Listbox.Option key={i} value={data}>
-            {`${data}`}
-          </Listbox.Option>
-        ))}
-      </Listbox.Options>
+      <div className="relative mt-1">
+        <Listbox.Button className="focus-visible:ring-offset-orange-300 relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left text-black shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 sm:text-sm">
+          <span className="block truncate">{state}</span>
+        </Listbox.Button>
+        <Transition
+          as={Fragment}
+          leave="transition ease-in duration-100"
+          leaveFrom="opacity-100"
+          leaveTo="opacity-0"
+        >
+          <Listbox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base text-gray2 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+            {stateData.map((data, i) => (
+              <Listbox.Option
+                key={i}
+                value={data}
+                className={({ active }) =>
+                  `relative cursor-default select-none p-2 ${
+                    active ? 'bg-blue-100 text-blue-900' : 'text-gray-900'
+                  }`
+                }
+              >
+                {`${data}`}
+              </Listbox.Option>
+            ))}
+          </Listbox.Options>
+        </Transition>
+      </div>
     </Listbox>
   </div>
 );
