@@ -9,7 +9,6 @@ import qs from 'qs';
 import ApplicationMenu from '@/components/applications/ApplicationMenu';
 import Pagination from '@/components/applications/Pagination';
 
-//페이지 화면에서 먼저 볼 회원 정보
 const PARTS: Parts[] = [Parts.all, Parts.web, Parts.server, Parts.design];
 const SORTOPTIONS: SortOrders[] = [
   SortOrders.createdDate_asc,
@@ -44,7 +43,7 @@ const index = () => {
     }),
   });
 
-  const { data, isLoading } = useSWR(`/api/applications?${query}`);
+  const { data, isLoading, error } = useSWR(`/api/applications?${query}`);
 
   const showDetail = (application: IData) => {
     router.push(
@@ -54,7 +53,6 @@ const index = () => {
       },
       `/applications/${application.id}`,
     );
-    //state 같은 방법이 있는지..?
   };
 
   const handlePageChange = (pageAction: PAGE_ACTION) => {
@@ -99,20 +97,25 @@ const index = () => {
             </div>
           </div>
           <ApplicationMenu />
-
-          {/* 어떤 정보를 페이지네이션 화면에서 볼 지     */}
-          {data.data.map((application: IData) => (
-            <ApplicationOverview
-              key={application.id}
-              info={application}
-              onClick={() => showDetail(application)}
-            />
-          ))}
-          <Pagination
-            page={page}
-            handlePageChange={handlePageChange}
-            totalPage={data.meta.totalPage}
-          />
+          {error ? (
+            <div>잠시후 다시 시도해 주세요</div>
+          ) : (
+            <>
+              {/* 어떤 정보를 페이지네이션 화면에서 볼 지     */}
+              {data.data.map((application: IData) => (
+                <ApplicationOverview
+                  key={application.id}
+                  info={application}
+                  onClick={() => showDetail(application)}
+                />
+              ))}
+              <Pagination
+                page={page}
+                handlePageChange={handlePageChange}
+                totalPage={data.meta.totalPage}
+              />
+            </>
+          )}
         </>
       )}
     </div>
