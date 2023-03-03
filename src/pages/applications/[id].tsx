@@ -14,7 +14,9 @@ const ApplicationDetail = () => {
 
   const MENU = ['info', 'answer'];
 
-  const { data, isLoading } = useSWR(`/api/assets/questions/${Info?.part}`);
+  const { data, isLoading, error } = useSWR(
+    `/api/assets/questions/${Info?.part}`,
+  );
 
   const ApplyInfo: IObj = {
     part: Info?.part,
@@ -34,7 +36,7 @@ const ApplicationDetail = () => {
   return (
     <>
       {isLoading ? (
-        <div>isLoading</div>
+        <div>Loading...</div>
       ) : (
         <>
           {' '}
@@ -93,25 +95,31 @@ const ApplicationDetail = () => {
                       </Link>
                     </li>
                   )}
-                  {Object.keys(ApplyAnswer).map((answer, i) => (
-                    <li key={i}>
-                      <div className="my-2 ml-3 text-xl text-blue1/[0.85]">
-                        {data?.data.resultQuestions[i].question}
-                      </div>
-                      <div className="h-80 rounded-lg bg-gray2 p-3 text-black">
-                        {ApplyAnswer[answer]}
-                      </div>
-                    </li>
-                  ))}
-                  {Info?.fifthAnswer && (
-                    <li key={'fifthAnswer'}>
-                      <div className="my-2 ml-3 text-xl text-blue1/[0.85]">
-                        {data?.data.resultQuestions[4].question}
-                      </div>
-                      <div className="h-80 rounded-lg bg-gray2 p-3 text-black">
-                        {Info.fifthAnswer}
-                      </div>
-                    </li>
+                  {error ? (
+                    <div>잠시후 다시 시도해 주세요</div>
+                  ) : (
+                    <>
+                      {Object.keys(ApplyAnswer).map((answer, i) => (
+                        <li key={i}>
+                          <div className="my-2 ml-3 text-xl text-blue1/[0.85]">
+                            {data?.data.resultQuestions[i].question}
+                          </div>
+                          <div className="h-80 rounded-lg bg-gray2 p-3 text-black">
+                            {ApplyAnswer[answer]}
+                          </div>
+                        </li>
+                      ))}
+                      {Info?.fifthAnswer && (
+                        <li key={'fifthAnswer'}>
+                          <div className="my-2 ml-3 text-xl text-blue1/[0.85]">
+                            {data?.data.resultQuestions[4].question}
+                          </div>
+                          <div className="h-80 rounded-lg bg-gray2 p-3 text-black">
+                            {Info.fifthAnswer}
+                          </div>
+                        </li>
+                      )}
+                    </>
                   )}
                 </ul>
               </Tab.Panel>
