@@ -1,6 +1,11 @@
 import { FC } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import isEmail from 'validator/lib/isEmail';
+import { axios } from '@/api';
+import { toast } from 'react-toastify';
+import { instanceOf } from 'prop-types';
+import { AxiosError } from 'axios';
+import { PostLoginPayload } from '@/payloads/api/managers';
 
 type FormValues = {
   email: string;
@@ -9,7 +14,26 @@ type FormValues = {
 
 export const SignInForm: FC = () => {
   const { register, handleSubmit } = useForm<FormValues>();
-  const onSubmit: SubmitHandler<FormValues> = data => console.log(data);
+  const onSubmit: SubmitHandler<FormValues> = async data => {
+    try {
+      const res = await axios.post<PostLoginPayload>(
+        '/api/managers/login',
+        data,
+      );
+      console.log(res);
+    } catch (e) {
+      // TODO: 코드가 너무 더럽다.. 리팩토링하자..
+      if (e instanceof AxiosError) {
+        if (typeof e.response?.data.message === 'string') {
+          toast.error(e.response?.data.message);
+        } else if (Array.isArray(e.response?.data.message)) {
+          e.response?.data.message.forEach((message: string) => {
+            toast.error(message);
+          });
+        }
+      }
+    }
+  };
 
   return (
     <form
