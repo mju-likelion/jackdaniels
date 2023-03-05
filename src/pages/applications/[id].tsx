@@ -3,10 +3,7 @@ import { Tab } from '@headlessui/react';
 import { IObj } from '@/components/applications/ApplicationData';
 import Link from 'next/link';
 import useSWR from 'swr';
-
-function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(' ');
-}
+import { classNames } from '@/utils';
 
 const ApplicationDetail = () => {
   const router = useRouter();
