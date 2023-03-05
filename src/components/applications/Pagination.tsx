@@ -8,7 +8,7 @@ interface IProps {
 
 export const Pagination = ({ handlePageChange, page, totalPage }: IProps) => {
   return (
-    <div className="my-1 mt-4 flex justify-center whitespace-pre-wrap text-lg">
+    <div className='my-1 mt-4 flex justify-center whitespace-pre-wrap text-lg'>
       {/* 먼저 볼 회원 정보 렌더링 */}
       <button
         onClick={() => handlePageChange(PAGE_ACTION.decrement)}

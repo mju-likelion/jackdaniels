@@ -75,15 +75,15 @@ const index = () => {
   //useReducer 사용해야 할지..?
 
   return (
-    <div className="m-auto h-screen w-full p-4">
+    <div className='m-auto h-screen w-full p-4'>
       {isLoading ? (
         <div>Loading...</div>
       ) : (
         <>
-          <div className="flex justify-end">
-            <div className="mr-3">
+          <div className='flex justify-end'>
+            <div className='mr-3'>
               <ListBox
-                label="part"
+                label='part'
                 stateData={PARTS}
                 state={part}
                 setState={setPart}
@@ -91,7 +91,7 @@ const index = () => {
             </div>
             <div>
               <ListBox
-                label="sort"
+                label='sort'
                 stateData={SORTOPTIONS}
                 state={sortOptions}
                 setState={setSortOptions}
