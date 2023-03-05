@@ -1,13 +1,15 @@
-import ApplicationOverview from '@/components/applications/ApplicationOverview';
-import ListBox from '@/components/applications/ListBox';
 import { PAGE_ACTION, Parts, SortOrders } from '@/types/ApplicationsType';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import { IData } from '@/components/applications/ApplicationData';
+import { IData } from '@/types/ApplicationsType';
 import useSWR from 'swr';
 import qs from 'qs';
-import ApplicationMenu from '@/components/applications/ApplicationMenu';
-import Pagination from '@/components/applications/Pagination';
+import {
+  Pagination,
+  ApplicationMenu,
+  ListBox,
+  ApplicationOverview,
+} from '@/components/applications';
 
 const PARTS: Parts[] = [Parts.all, Parts.web, Parts.server, Parts.design];
 const SORTOPTIONS: SortOrders[] = [

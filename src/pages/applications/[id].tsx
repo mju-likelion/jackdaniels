@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import { Tab } from '@headlessui/react';
-import { IObj } from '@/components/applications/ApplicationData';
+import { IObj } from '@/types/ApplicationsType';
 import Link from 'next/link';
 import useSWR from 'swr';
 import { classNames } from '@/utils';

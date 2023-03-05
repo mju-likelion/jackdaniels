@@ -1,12 +1,12 @@
-import React, { FC } from 'react';
-import { IData } from './ApplicationData';
+import React from 'react';
+import { IData } from '@/types/ApplicationsType';
 
 interface IProps {
   info: IData;
   onClick: () => void;
 }
 
-const ApplicationOverview = ({ info, onClick }: IProps): JSX.Element => {
+export const ApplicationOverview = ({ info, onClick }: IProps): JSX.Element => {
   return (
     <div className="flex h-14 w-full items-center border-b border-gray3 p-3 text-sm">
       <div className="basis-2/12 text-base">{info.name}</div>
@@ -22,4 +22,3 @@ const ApplicationOverview = ({ info, onClick }: IProps): JSX.Element => {
     </div>
   );
 };
-export default ApplicationOverview;

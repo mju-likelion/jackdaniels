@@ -12,24 +12,32 @@ export enum SortOrders {
   name_desc = '이름 내림차순',
 }
 
-export interface Application {
+export enum PAGE_ACTION {
+  increment = 'INCREMENT',
+  decrement = 'DECREMENT',
+}
+
+export interface IObj {
+  [key: string]: any;
+}
+
+export interface IData extends IObj {
+  id: string;
   name: string;
   phone: string;
   email: string;
   major: string;
   sid: string;
-  grade: '1' | '2' | '3' | '4';
-  enrollmentStatus: '재학' | '휴학' | '졸업유예';
-  part: 'web' | 'server' | 'design';
+  grade: string;
+  enrollmentStatus: string;
+  part: string;
+  personalInfoAgreementDate: string;
   cvUrl: string;
   firstAnswer: string;
   secondAnswer: string;
   thirdAnswer: string;
   fourthAnswer: string;
   fifthAnswer: string;
-}
-
-export enum PAGE_ACTION {
-  increment = 'INCREMENT',
-  decrement = 'DECREMENT',
+  createdDate: string;
+  updatedDate: string;
 }

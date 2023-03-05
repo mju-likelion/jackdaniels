@@ -6,7 +6,7 @@ interface IProps {
   totalPage: number;
 }
 
-const Pagination = ({ handlePageChange, page, totalPage }: IProps) => {
+export const Pagination = ({ handlePageChange, page, totalPage }: IProps) => {
   return (
     <div className="my-1 mt-4 flex justify-center whitespace-pre-wrap text-lg">
       {/* 먼저 볼 회원 정보 렌더링 */}
@@ -26,5 +26,3 @@ const Pagination = ({ handlePageChange, page, totalPage }: IProps) => {
     </div>
   );
 };
-
-export default Pagination;

@@ -21,7 +21,7 @@ interface Props<T> {
  * @returns
  */
 
-const ListBox = <T extends string>({
+export const ListBox = <T extends string>({
   label,
   stateData,
   state,
@@ -60,5 +60,3 @@ const ListBox = <T extends string>({
     </Listbox>
   </div>
 );
-
-export default ListBox;

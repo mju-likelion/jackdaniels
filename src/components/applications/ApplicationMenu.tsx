@@ -1,4 +1,4 @@
-const ApplicationMenu = () => {
+export const ApplicationMenu = () => {
   return (
     <div className="flex h-14 w-full items-center border-b p-3 text-xl">
       <div className="basis-2/12">name</div>
@@ -9,5 +9,3 @@ const ApplicationMenu = () => {
     </div>
   );
 };
-
-export default ApplicationMenu;
