@@ -2,6 +2,8 @@ import { FC, Fragment } from 'react';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { classNames } from '@/utils';
+import { useManager } from '@/hooks';
+import { useRouter } from 'next/router';
 
 const user = {
   name: 'Tom Cook',
@@ -12,12 +14,15 @@ const user = {
 
 const navigation = [{ name: '지원서 확인', href: '#', current: true }];
 
-const userNavigation = [
-  { name: 'Settings', href: '#' },
-  { name: 'Sign out', href: '#' },
-];
-
 export const NavBar: FC = () => {
+  const router = useRouter();
+  const removeAccessToken = useManager(state => state.removeAccessToken);
+
+  const onSignOut = () => {
+    removeAccessToken();
+    router.reload();
+  };
+
   return (
     <>
       {/*
@@ -86,21 +91,19 @@ export const NavBar: FC = () => {
                           leaveTo='transform opacity-0 scale-95'
                         >
                           <Menu.Items className='absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black/5 focus:outline-none'>
-                            {userNavigation.map(item => (
-                              <Menu.Item key={item.name}>
-                                {({ active }) => (
-                                  <a
-                                    href={item.href}
-                                    className={classNames(
-                                      active ? 'bg-zinc-100' : '',
-                                      'block px-4 py-2 text-sm text-zinc-700',
-                                    )}
-                                  >
-                                    {item.name}
-                                  </a>
-                                )}
-                              </Menu.Item>
-                            ))}
+                            <Menu.Item>
+                              {({ active }) => (
+                                <button
+                                  onClick={onSignOut}
+                                  className={classNames(
+                                    active ? 'bg-zinc-100' : '',
+                                    'block px-4 py-2 text-sm text-zinc-700',
+                                  )}
+                                >
+                                  로그아웃
+                                </button>
+                              )}
+                            </Menu.Item>
                           </Menu.Items>
                         </Transition>
                       </Menu>
@@ -164,16 +167,12 @@ export const NavBar: FC = () => {
                     </div>
                   </div>
                   <div className='mt-3 space-y-1 px-2'>
-                    {userNavigation.map(item => (
-                      <Disclosure.Button
-                        key={item.name}
-                        as='a'
-                        href={item.href}
-                        className='block rounded-md px-3 py-2 text-base font-medium text-zinc-400 hover:bg-zinc-700 hover:text-white'
-                      >
-                        {item.name}
-                      </Disclosure.Button>
-                    ))}
+                    <Disclosure.Button
+                      onClick={onSignOut}
+                      className='block rounded-md px-3 py-2 text-base font-medium text-zinc-400 hover:bg-zinc-700 hover:text-white'
+                    >
+                      로그아웃
+                    </Disclosure.Button>
                   </div>
                 </div>
               </Disclosure.Panel>
