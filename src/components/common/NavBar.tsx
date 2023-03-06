@@ -1,7 +1,9 @@
-import { FC, Fragment, PropsWithChildren } from 'react';
+import { FC, Fragment } from 'react';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { classNames } from '@/utils';
+import { useManager } from '@/hooks';
+import { useRouter } from 'next/router';
 
 const user = {
   name: 'Tom Cook',
@@ -10,14 +12,17 @@ const user = {
     'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
 };
 
-const navigation = [{ name: '지원서 확인', href: '#', current: true }];
+const navigation = [{ name: '지원서 확인', href: '/applications' }];
 
-const userNavigation = [
-  { name: 'Settings', href: '#' },
-  { name: 'Sign out', href: '#' },
-];
+export const NavBar: FC = () => {
+  const router = useRouter();
+  const removeAccessToken = useManager(state => state.removeAccessToken);
 
-export const NavBar: FC<PropsWithChildren> = ({ children }) => {
+  const onSignOut = () => {
+    removeAccessToken();
+    router.reload();
+  };
+
   return (
     <>
       {/*
@@ -49,12 +54,14 @@ export const NavBar: FC<PropsWithChildren> = ({ children }) => {
                             key={item.name}
                             href={item.href}
                             className={classNames(
-                              item.current
+                              item.href === router.pathname
                                 ? 'bg-zinc-900 text-white'
                                 : 'text-zinc-300 hover:bg-zinc-700 hover:text-white',
                               'px-3 py-2 rounded-md text-sm font-medium',
                             )}
-                            aria-current={item.current ? 'page' : undefined}
+                            aria-current={
+                              item.href === router.pathname ? 'page' : undefined
+                            }
                           >
                             {item.name}
                           </a>
@@ -86,21 +93,19 @@ export const NavBar: FC<PropsWithChildren> = ({ children }) => {
                           leaveTo='transform opacity-0 scale-95'
                         >
                           <Menu.Items className='absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black/5 focus:outline-none'>
-                            {userNavigation.map(item => (
-                              <Menu.Item key={item.name}>
-                                {({ active }) => (
-                                  <a
-                                    href={item.href}
-                                    className={classNames(
-                                      active ? 'bg-zinc-100' : '',
-                                      'block px-4 py-2 text-sm text-zinc-700',
-                                    )}
-                                  >
-                                    {item.name}
-                                  </a>
-                                )}
-                              </Menu.Item>
-                            ))}
+                            <Menu.Item>
+                              {({ active }) => (
+                                <button
+                                  onClick={onSignOut}
+                                  className={classNames(
+                                    active ? 'bg-zinc-100' : '',
+                                    'block px-4 py-2 text-sm text-zinc-700',
+                                  )}
+                                >
+                                  로그아웃
+                                </button>
+                              )}
+                            </Menu.Item>
                           </Menu.Items>
                         </Transition>
                       </Menu>
@@ -134,12 +139,14 @@ export const NavBar: FC<PropsWithChildren> = ({ children }) => {
                       as='a'
                       href={item.href}
                       className={classNames(
-                        item.current
+                        item.href === router.pathname
                           ? 'bg-zinc-900 text-white'
                           : 'text-zinc-300 hover:bg-zinc-700 hover:text-white',
                         'block px-3 py-2 rounded-md text-base font-medium',
                       )}
-                      aria-current={item.current ? 'page' : undefined}
+                      aria-current={
+                        item.href === router.pathname ? 'page' : undefined
+                      }
                     >
                       {item.name}
                     </Disclosure.Button>
@@ -164,25 +171,18 @@ export const NavBar: FC<PropsWithChildren> = ({ children }) => {
                     </div>
                   </div>
                   <div className='mt-3 space-y-1 px-2'>
-                    {userNavigation.map(item => (
-                      <Disclosure.Button
-                        key={item.name}
-                        as='a'
-                        href={item.href}
-                        className='block rounded-md px-3 py-2 text-base font-medium text-zinc-400 hover:bg-zinc-700 hover:text-white'
-                      >
-                        {item.name}
-                      </Disclosure.Button>
-                    ))}
+                    <Disclosure.Button
+                      onClick={onSignOut}
+                      className='block rounded-md px-3 py-2 text-base font-medium text-zinc-400 hover:bg-zinc-700 hover:text-white'
+                    >
+                      로그아웃
+                    </Disclosure.Button>
                   </div>
                 </div>
               </Disclosure.Panel>
             </>
           )}
         </Disclosure>
-        <main className='mx-auto max-w-7xl py-8 px-4 sm:px-6 lg:px-8'>
-          {children}
-        </main>
       </div>
     </>
   );
