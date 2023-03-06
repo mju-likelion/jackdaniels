@@ -1,6 +1,6 @@
 import React from 'react';
 import { IData } from '@/types/ApplicationsType';
-import { format } from 'date-fns';
+import { addHours, format } from 'date-fns';
 
 interface IProps {
   info: IData;
@@ -16,7 +16,10 @@ export const ApplicationOverview = ({ info, onClick }: IProps): JSX.Element => {
       <div className='basis-2/12 text-gray2'>{info.part}</div>
       <div className='flex basis-3/12 justify-between'>
         <div className='text-gray2'>
-          {format(new Date(info.createdDate), 'yyyy.MM.dd hh:mm:ss')}
+          {format(
+            addHours(new Date(info.createdDate), 9),
+            'yyyy.MM.dd HH:mm:ss',
+          )}
         </div>
         <button className='text-blue1' onClick={onClick}>
           detail
