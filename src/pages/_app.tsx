@@ -4,11 +4,21 @@ import { ToastContainer } from 'react-toastify';
 
 import '@/styles/globals.css';
 import 'react-toastify/dist/ReactToastify.min.css';
+import { useEffect } from 'react';
+import { useManager } from '@/hooks';
 import { useRouter } from 'next/router';
 import { NavBar } from '@/components/common';
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
+  const accessToken = useManager(state => state.accessToken);
+
+  useEffect(() => {
+    if (router.pathname !== '/sign-in' && !accessToken) {
+      router.push('/sign-in');
+    }
+  }, []);
+
   const FULL_SCREEN_PAGES = ['/sign-in'];
 
   return (

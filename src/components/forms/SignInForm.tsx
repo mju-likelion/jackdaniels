@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import { instanceOf } from 'prop-types';
 import { AxiosError } from 'axios';
 import { PostLoginPayload } from '@/payloads/api/managers';
+import { useManager } from '@/hooks';
 
 type FormValues = {
   email: string;
@@ -13,6 +14,8 @@ type FormValues = {
 };
 
 export const SignInForm: FC = () => {
+  const setAccessToken = useManager(state => state.setAccessToken);
+
   const { register, handleSubmit } = useForm<FormValues>();
   const onSubmit: SubmitHandler<FormValues> = async data => {
     try {
@@ -20,7 +23,8 @@ export const SignInForm: FC = () => {
         '/api/managers/login',
         data,
       );
-      console.log(res);
+      setAccessToken(res.data.data.accessToken);
+      window.location.href = '/';
     } catch (e) {
       // TODO: 코드가 너무 더럽다.. 리팩토링하자..
       if (e instanceof AxiosError) {
@@ -31,6 +35,9 @@ export const SignInForm: FC = () => {
             toast.error(message);
           });
         }
+      } else {
+        toast.error('알 수 없는 에러가 발생했습니다. 콘솔을 확인해주세요.');
+        console.error(e);
       }
     }
   };
