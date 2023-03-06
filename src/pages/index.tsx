@@ -1,5 +1,12 @@
-import { PageTitle } from '@/components/common';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 
 export default function Home() {
-  return <PageTitle>Hello</PageTitle>;
+  const router = useRouter();
+
+  useEffect(() => {
+    router.push('/applications');
+  }, []);
+
+  return <>loading...</>;
 }
