@@ -25,7 +25,11 @@ export default function App({ Component, pageProps }: AppProps) {
     <SWRConfig
       value={{
         fetcher: url =>
-          fetch(`${process.env.NEXT_PUBLIC_API_URL}${url}`).then(r => r.json()),
+          fetch(`${process.env.NEXT_PUBLIC_API_URL}${url}`, {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }).then(r => r.json()),
       }}
     >
       {FULL_SCREEN_PAGES.includes(router.pathname) ? (
