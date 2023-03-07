@@ -101,7 +101,7 @@ const ApplicationDetail = () => {
                           <div className='my-2 ml-3 text-xl text-blue1/[0.85]'>
                             {data?.data.resultQuestions[i].question}
                           </div>
-                          <div className='h-80 rounded-lg bg-gray2 p-3 text-black'>
+                          <div className='h-80 overflow-y-scroll rounded-lg bg-gray2 p-3 text-black	'>
                             {ApplyAnswer[answer]}
                           </div>
                         </li>
@@ -111,7 +111,7 @@ const ApplicationDetail = () => {
                           <div className='my-2 ml-3 text-xl text-blue1/[0.85]'>
                             {data?.data.resultQuestions[4].question}
                           </div>
-                          <div className='h-80 rounded-lg bg-gray2 p-3 text-black'>
+                          <div className='h-80 overflow-y-scroll rounded-lg bg-gray2 p-3 text-black	'>
                             {Info.fifthAnswer}
                           </div>
                         </li>
