@@ -97,22 +97,30 @@ const ApplicationDetail = () => {
                   ) : (
                     <>
                       {Object.keys(ApplyAnswer).map((answer, i) => (
-                        <li key={i}>
+                        <li key={i} className='relative'>
                           <div className='my-2 ml-3 text-xl text-blue1/[0.85]'>
                             {data?.data.resultQuestions[i].question}
                           </div>
-                          <div className='h-80 overflow-y-scroll rounded-lg bg-gray2 p-3 text-black	'>
+                          <div className='h-80 overflow-y-scroll rounded-lg bg-gray2 p-3 text-black'>
                             {ApplyAnswer[answer]}
+                          </div>
+                          <div className='absolute bottom-2 right-4 text-white'>
+                            {ApplyAnswer[answer]?.length}/
+                            {data?.data.resultQuestions[i].maxLength}
                           </div>
                         </li>
                       ))}
                       {Info?.fifthAnswer && (
-                        <li key={'fifthAnswer'}>
-                          <div className='my-2 ml-3 text-xl text-blue1/[0.85]'>
+                        <li key={'fifthAnswer'} className='relative'>
+                          <div className='my-2 ml-3 text-xl text-blue1/[0.85] '>
                             {data?.data.resultQuestions[4].question}
                           </div>
-                          <div className='h-80 overflow-y-scroll rounded-lg bg-gray2 p-3 text-black	'>
+                          <div className='h-80 overflow-y-scroll rounded-lg bg-gray2 p-3 text-black'>
                             {Info.fifthAnswer}
+                          </div>
+                          <div className='absolute bottom-2 right-4 text-white'>
+                            {Info.fifthAnswer?.length}/
+                            {data?.data.resultQuestions[4].maxLength}
                           </div>
                         </li>
                       )}
