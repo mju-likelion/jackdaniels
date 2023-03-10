@@ -17,7 +17,7 @@ export const ApplicationOverview = ({ info, onClick }: IProps): JSX.Element => {
       <div className='flex basis-3/12 justify-between'>
         <div className='text-gray2'>
           {format(
-            addHours(new Date(info.createdDate), 9),
+            addHours(new Date(info.createdDate), 0),
             'yyyy.MM.dd HH:mm:ss',
           )}
         </div>
